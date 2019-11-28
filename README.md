@@ -20,7 +20,7 @@
 * [ ] 离线消息
 
 ## 运行
-1.启动redis与Zookeeper
+1.启动Redis与Zookeeper
 
 2.启动路由
 ```
