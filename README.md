@@ -34,3 +34,4 @@ yim-server(本地下打jar包运行指定port，或者直接先启动一个然�
 ```
 yim-client(本地下打jar包运行指定port,userId,username，或者直接先启动一个然后改一下端口号以及userId和username再启动)
 ```	
+参考资料：https://crossoverjie.top/2019/01/02/netty/cim01-started/
