@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package io.yzecho.yimcommon.protobuf;
+
+option java_outer_classname = "MessageProto";
+
+message ChatMessage {
+    string command = 1;
+    int64 time = 2;
+    int32 userId = 3;
+    string content = 4;
+}
