@@ -1,6 +1,8 @@
 package io.yzecho.yimserver.server;
 
 import io.netty.channel.Channel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.yzecho.yimcommon.entity.User;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,4 +39,5 @@ public class ChannelMap {
     public Channel getClient(Integer userId) {
         return CHANNEL_MAP.get(userId);
     }
+
 }

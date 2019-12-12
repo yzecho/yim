@@ -6,6 +6,8 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
+import io.netty.handler.timeout.IdleStateHandler;
+import io.yzecho.yimclient.encode.HeartBeatEncoder;
 import io.yzecho.yimcommon.protobuf.MessageProto;
 
 /**
@@ -13,7 +15,7 @@ import io.yzecho.yimcommon.protobuf.MessageProto;
  * @desc
  * @date 25/11/2019 11:05
  */
-public class YimClientInit extends ChannelInitializer<SocketChannel> {
+public class YimClientInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel channel) throws Exception {
         channel.pipeline()

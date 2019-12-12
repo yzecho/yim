@@ -11,6 +11,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import io.yzecho.yimclient.config.InitConfiguration;
+import io.yzecho.yimclient.pojo.ClientInfo;
 import io.yzecho.yimcommon.constant.BasicConstant;
 import io.yzecho.yimcommon.constant.MessageConstant;
 import io.yzecho.yimcommon.entity.Chat;
@@ -18,6 +19,8 @@ import io.yzecho.yimcommon.entity.Server;
 import io.yzecho.yimcommon.protobuf.MessageProto;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -40,6 +43,15 @@ public class YimClient {
     private InitConfiguration configuration;
 
     private OkHttpClient okHttpClient;
+
+    @Value("${yim.user.id}")
+    private Integer userId;
+
+    @Value("${yim.user.username}")
+    private String username;
+
+    @Autowired
+    private ClientInfo clientInfo;
 
     public YimClient(OkHttpClient okHttpClient, InitConfiguration configuration) {
         this.okHttpClient = okHttpClient;
@@ -71,7 +83,7 @@ public class YimClient {
                 .setTime(System.currentTimeMillis())
                 .build();
         channel.writeAndFlush(login).addListener(future -> {
-            log.info("注册成功");
+            log.info("注册服务端成功");
         });
     }
 
@@ -89,21 +101,20 @@ public class YimClient {
                     .url(configuration.getRouteLoginUrl())
                     .post(requestBody)
                     .build();
-            log.info("requestInfo:{}",request.toString());
 
             Response response = okHttpClient.newCall(request).execute();
 
             if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }
-            log.info("response:{}",response.body());
 
             try (ResponseBody body = response.body()) {
                 String json = Objects.requireNonNull(body).string();
-                log.info("json" + json);
                 server = JSON.parseObject(json, Server.class);
-                log.info("server" + server);
                 log.info("获取服务端ip+port成功" + server.getIp() + ":" + server.getNettyPort());
+                // 保存信息
+                clientInfo.saveServiceInfo(server.getIp() + ":" + server.getNettyPort())
+                        .saveUserInfo(userId, username);
             }
         } catch (IOException e) {
             log.error("连接失败");
@@ -119,7 +130,7 @@ public class YimClient {
             bootstrap.group(group)
                     .channel(NioSocketChannel.class)
                     .option(ChannelOption.SO_KEEPALIVE, true)
-                    .handler(new YimClientInit());
+                    .handler(new YimClientInitializer());
             ChannelFuture channelFuture = bootstrap.connect(server.getIp(), server.getNettyPort()).sync();
             if (channelFuture.isSuccess()) {
                 log.info("客户端启动成功");

@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class YimServerHandler extends SimpleChannelInboundHandler<MessageProto.ChatMessage> {
 
-
     private AttributeKey<Integer> userId = AttributeKey.valueOf("userId");
 
     private ChannelMap channelMap = ChannelMap.newInstance();
@@ -38,7 +37,7 @@ public class YimServerHandler extends SimpleChannelInboundHandler<MessageProto.C
             // 登录，保存Channel
             channelHandlerContext.channel().attr(userId).set(chatMessage.getUserId());
             channelMap.putClient(chatMessage.getUserId(), channelHandlerContext.channel());
-            log.info("客户端登录成功.userId:" + chatMessage.getUserId());
+            log.info("客户端[{}]登录成功", chatMessage.getUserId());
         }
     }
 
@@ -48,6 +47,6 @@ public class YimServerHandler extends SimpleChannelInboundHandler<MessageProto.C
         // 从Channel缓存中删除客户端
         channelMap.getCHANNEL_MAP().remove(uid);
         clientProcessor.down(uid);
-        log.info("客户端强制下线.userId:" + uid);
+        log.info("客户端[{}]退出系统", uid);
     }
 }

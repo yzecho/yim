@@ -26,12 +26,18 @@ public class ClientProcessor {
         this.configuration = configuration;
     }
 
+    /**
+     * 客户端下线
+     *
+     * @param userId
+     * @throws IOException
+     */
     public void down(Integer userId) throws IOException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("userId", userId);
         RequestBody requestBody = RequestBody.create(BasicConstant.MEDIA_TYPE, jsonObject.toString());
         Request request = new Request.Builder()
-                .url(configuration.getAddress())
+                .url(configuration.getClearRouteUrl())
                 .post(requestBody)
                 .build();
 

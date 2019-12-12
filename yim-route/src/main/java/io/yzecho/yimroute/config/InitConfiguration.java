@@ -22,4 +22,7 @@ public class InitConfiguration {
 
     @Value("${yim.zookeeper.address}")
     private String address;
+
+    @Value("${yim.route.wayLoop}")
+    private String routeWay;
 }

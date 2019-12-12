@@ -1,5 +1,5 @@
 server:
-  port: 8074
+  port: 8072
 
 # 本地模拟
 yim:
@@ -8,13 +8,17 @@ yim:
       url: http://localhost:8880/login
     chat:
       url: http://localhost:8880/chat
+    private:
+      url: http://localhost:8880/privateRoute
     logout:
       url: http://localhost:8880/logout
+    online:
+      url: http://localhost:8880/onlineUser
 
   #客户端唯一ID
   user:
-    id: 1001
-    username: yzecho
+    id: 1002
+    username: user2
 
 #  callback:
 #    thread:

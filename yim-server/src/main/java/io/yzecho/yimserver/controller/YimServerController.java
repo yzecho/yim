@@ -41,7 +41,12 @@ public class YimServerController {
                 .setUserId(chat.getUserId())
                 .setContent(chat.getContent())
                 .build();
-        // 2.根据消息发送给客户端(群发)
+        // 2.根据消息发送给客户端(私发)
+        if (MessageConstant.PRIVATE.equals(chat.getCommand())) {
+            Channel channel = channelMap.getCHANNEL_MAP().get(chat.getUserId());
+            channel.writeAndFlush(message);
+        }
+        // 3.或者根据消息发送给客户端(群发)
         // 根据userId，从本地Map集合中得到对应的客户端Channel，发送消息
         if (MessageConstant.CHAT.equals(chat.getCommand())) {
             for (Map.Entry<Integer, Channel> channelEntry : channelMap.getCHANNEL_MAP().entrySet()) {

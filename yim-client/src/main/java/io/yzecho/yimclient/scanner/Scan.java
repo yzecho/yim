@@ -1,8 +1,10 @@
 package io.yzecho.yimclient.scanner;
 
+import com.vdurmont.emoji.EmojiParser;
 import io.yzecho.yimclient.client.YimClient;
 import io.yzecho.yimclient.config.InitConfiguration;
 import io.yzecho.yimclient.config.SpringBeanFactory;
+import io.yzecho.yimclient.service.MessageHandlerService;
 import io.yzecho.yimcommon.constant.MessageConstant;
 import io.yzecho.yimcommon.entity.Chat;
 import io.yzecho.yimcommon.util.StringUtil;
@@ -21,9 +23,12 @@ public class Scan implements Runnable {
     private YimClient client;
     private InitConfiguration configuration;
 
+    private MessageHandlerService messageHandlerService;
+
     public Scan() {
         client = SpringBeanFactory.getBean(YimClient.class);
         configuration = SpringBeanFactory.getBean(InitConfiguration.class);
+        messageHandlerService = SpringBeanFactory.getBean(MessageHandlerService.class);
     }
 
     @Override
@@ -45,11 +50,13 @@ public class Scan implements Runnable {
                     client.start();
                     log.info("登录成功");
                     continue;
+                } else if (messageHandlerService.innerCommand(msg)) {
+                    continue;
                 }
 
-                // 调用route端api进行消息发送
-                Chat chat = new Chat(MessageConstant.CHAT, System.currentTimeMillis(), configuration.getUserId(), msg);
-                client.sendMessage(chat);
+                messageHandlerService.sendMsg(msg);
+
+                log.info("{}:{}", configuration.getUsername(), EmojiParser.parseToUnicode(msg));
             }
         } catch (Exception e) {
             e.printStackTrace();

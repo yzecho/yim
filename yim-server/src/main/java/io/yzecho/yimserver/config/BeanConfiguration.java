@@ -2,6 +2,7 @@ package io.yzecho.yimserver.config;
 
 import okhttp3.OkHttpClient;
 import org.I0Itec.zkclient.ZkClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,11 +16,8 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class BeanConfiguration {
 
+    @Autowired
     private InitConfiguration configuration;
-
-    public BeanConfiguration(InitConfiguration configuration) {
-        this.configuration = configuration;
-    }
 
     @Bean
     public ZkClient buildZkClient() {

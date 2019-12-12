@@ -1,6 +1,7 @@
 package io.yzecho.yimclient.config;
 
 import okhttp3.OkHttpClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,9 @@ import java.util.concurrent.TimeUnit;
  */
 @Configuration
 public class BeanConfiguration {
+
+    @Value("${yim.user.id}")
+    private Integer userId;
 
     /**
      * http client

@@ -10,11 +10,14 @@ yim:
 
   zookeeper:
     switch: true
-    address: http://localhost:2181
+    address: 127.0.0.1:2181
     root: /yimroute
 
     route:
       logoutUrl: http://localhost:8880/logout
+
+  heartbeat:
+    time: 30
 
 #  etcd:
 #    address: http://localhost:2181

@@ -1,5 +1,6 @@
 package io.yzecho.yimclient.client;
 
+import com.vdurmont.emoji.EmojiParser;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.yzecho.yimclient.config.SpringBeanFactory;
@@ -17,7 +18,7 @@ public class YimClientHandler extends SimpleChannelInboundHandler<MessageProto.C
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, MessageProto.ChatMessage chatMessage) throws Exception {
-        log.info("客户端收到消息:{}", chatMessage.getContent());
+        log.info("客户端[{}]说:{}", chatMessage.getUserId(), EmojiParser.parseToUnicode(chatMessage.getContent()));
     }
 
     /**

@@ -27,4 +27,10 @@ public class InitConfiguration {
 
     @Value("${yim.zookeeper.switch}")
     private boolean zkSwitch;
+
+    @Value("${yim.heartbeat.time}")
+    private long heartBeatTime;
+
+    @Value("${yim.zookeeper.route.logoutUrl}")
+    private String clearRouteUrl;
 }

@@ -1,5 +1,6 @@
 package io.yzecho.yimroute.config;
 
+import io.yzecho.yimcommon.algorithm.RouteHandler;
 import io.yzecho.yimroute.zookeeper.ZkUtil;
 import okhttp3.OkHttpClient;
 import org.I0Itec.zkclient.IZkChildListener;
@@ -75,5 +76,16 @@ public class BeanConfiguration {
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)
                 .build();
+    }
+
+    @Bean
+    public RouteHandler buildRouteHandler() throws Exception {
+        String routeWay = configuration.getRouteWay();
+        RouteHandler routeHandler = (RouteHandler) Class.forName(routeWay).getDeclaredConstructor().newInstance();
+        // 之后会加入 一致性Hash 解决方案
+        if (routeWay.contains("ConsistentHash")) {
+
+        }
+        return routeHandler;
     }
 }

@@ -1,5 +1,6 @@
 package io.yzecho.yimcommon.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,7 +11,8 @@ import java.io.Serializable;
  * @date 25/11/2019 11:17
  */
 @Data
+@AllArgsConstructor
 public class User implements Serializable {
-    private int userId;
+    private Integer userId;
     private String username;
 }

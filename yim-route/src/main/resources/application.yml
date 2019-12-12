@@ -8,6 +8,11 @@ yim:
     address: 127.0.0.1:2181
     root: /yimroute
 
+  route:
+    wayLoop: io.yzecho.yimcommon.algorithm.loop.LoopHandler #路由策略 轮询
+    wayRandom: io.yzecho.yimcommon.algorithm.random.Rouler #路由策略 随机
+
+
 # Redis配置
 spring:
   redis:

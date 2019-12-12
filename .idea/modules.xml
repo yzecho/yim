@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/yim.iml" filepath="$PROJECT_DIR$/yim.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yim-client/yim-client.iml" filepath="$PROJECT_DIR$/yim-client/yim-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yim-common/yim-common.iml" filepath="$PROJECT_DIR$/yim-common/yim-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yim-route/yim-route.iml" filepath="$PROJECT_DIR$/yim-route/yim-route.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yim-server/yim-server.iml" filepath="$PROJECT_DIR$/yim-server/yim-server.iml" />
+    </modules>
+  </component>
+</project>

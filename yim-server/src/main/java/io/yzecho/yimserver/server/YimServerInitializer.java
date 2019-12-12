@@ -6,7 +6,9 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
+import io.netty.handler.timeout.IdleStateHandler;
 import io.yzecho.yimcommon.protobuf.MessageProto;
+import io.yzecho.yimserver.decode.HeartBeatDecoder;
 
 /**
  * @author yzecho
@@ -17,7 +19,6 @@ public class YimServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel channel) throws Exception {
-        // google Protobuf 编解码器
         channel.pipeline()
                 .addLast(new ProtobufVarint32FrameDecoder())
                 .addLast(new ProtobufDecoder(MessageProto.ChatMessage.getDefaultInstance()))
